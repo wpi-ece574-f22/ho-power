@@ -1,0 +1,18 @@
+read_liberty -lib /mnt/volume_nyc1_01/skywater-pdk/libraries/sky130_fd_sc_hd/latest/timing/sky130_fd_sc_hd__ff_n40C_1v76.lib
+
+read_verilog ../rtl/bcounter8.v 
+
+synth -top bcounter8
+
+opt -purge
+
+dfflibmap -liberty /mnt/volume_nyc1_01/skywater-pdk/libraries/sky130_fd_sc_hd/latest/timing/sky130_fd_sc_hd__ff_n40C_1v76.lib
+
+abc -D 10000 -script abc.speed -liberty  /mnt/volume_nyc1_01/skywater-pdk/libraries/sky130_fd_sc_hd/latest/timing/sky130_fd_sc_hd__ff_n40C_1v76.lib
+
+setundef -zero
+opt_clean -purge
+
+stat -liberty  /mnt/volume_nyc1_01/skywater-pdk/libraries/sky130_fd_sc_hd/latest/timing/sky130_fd_sc_hd__ff_n40C_1v76.lib
+
+write_verilog bcounter8_gl.v
